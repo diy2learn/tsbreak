@@ -141,3 +141,19 @@ init_git: check-GITHUBPAT check_url-REPO_URL
 refs:
 	@echo func to check input var: https://stackoverflow.com/questions/10858261/abort-makefile-if-variable-not-set
 
+
+#=========Utility===================================
+conda-env:
+	@read -p "Enter Env Name ():" env_name; \
+	conda create -n $${env_name} python=3.6; \
+	conda activate $${env_name}
+
+jupyter-env:
+	@read -p "Enter Env Name ($CONDA_DEFAULT_ENV):" env_name; \
+	if [ $${env_name} == ""]; then \
+		echo "used suggested ENV"; \
+		env_name=$(CONDA_DEFAULT_ENV); \
+	fi; \
+	pip install --user ipykernel; \
+	python -m ipykernel install --user --name=$${env_name}
+
